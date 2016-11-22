@@ -14,6 +14,7 @@ public class WebServer {
 	private static final int fPort = 8080;
 	private static final int fNumberOfThreads = 100;
 	private static final Executor fThreadPool = Executors.newFixedThreadPool(fNumberOfThreads);
+	private static final String CRLF = System.getProperty("line.separator");
 
 	public static void main(String[] args) throws IOException {
 		ServerSocket socket = new ServerSocket(fPort);
@@ -43,11 +44,15 @@ public class WebServer {
 			System.out.println("--- Client request: " + request);
 
 			out = new PrintWriter(s.getOutputStream(), true);
-			out.println("HTTP/1.0 200");
+			out.println("HTTP/1.1 200");
 			out.println("Content-type: text/html");
 			out.println("Server-name: My Web Server");
-			String response = "<html>" + "<head>" + "<title>My Web Server</title></head>"
-					+ "<h1>Welcome to My Web Server!</h1>" + "</html>";
+			String response = "<html>" + CRLF 
+					+ "<head>" + CRLF 
+					+ "<title>My Web Server</title>" + CRLF 
+					+ "</head>" + CRLF 
+					+ "<h1>Welcome to My Web Server!</h1>" + CRLF 
+					+ "</html>";
 			out.println("Content-length: " + response.length());
 			out.println("");
 			out.println(response);
